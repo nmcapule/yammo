@@ -6,6 +6,7 @@ proto_library(
     name = "compass_proto",
     srcs = ["compass.proto"],
     visibility = ["//visibility:public"],
+    deps = ["//protos/v1/primitives:primitives_proto"],
 )
 
 go_proto_library(
@@ -14,6 +15,7 @@ go_proto_library(
     importpath = "github.com/nmcapule/yammo/protos/v1/compass",
     proto = ":compass_proto",
     visibility = ["//visibility:public"],
+    deps = ["//protos/v1/primitives:go_default_library"],
 )
 
 go_library(

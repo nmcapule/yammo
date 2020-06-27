@@ -1,13 +1,52 @@
 syntax = "proto3";
 
-// The greeting service definition.
+import "protos/v1/primitives/primitives.proto";
+
+package protos.v1.compass;
+
+// The compass service definition.
 service Compass {
-  // Sends a greeting
-  rpc SayHello(HelloRequest) returns (HelloReply) {}
+  rpc PlaceEntity(PlaceEntityRequest) returns (PlaceEntityReply) {}
+  rpc MoveEntity(MoveEntityRequest) returns (MoveEntityResponse) {}
+  rpc FindEntity(FindEntityRequest) returns (FindEntityReply) {}
+  rpc FindNearbyEntities(FindNearbyEntitiesRequest)
+      returns (FindNearbyEntitiesReply) {}
 }
 
-// The request message containing the user's name.
-message HelloRequest { string name = 1; }
+message PlaceEntityRequest {
+  // Entity id.
+  int32 entity_id = 1;
+  protos.v1.primitives.Position position = 2;
+}
 
-// The response message containing the greetings
-message HelloReply { string message = 1; }
+message PlaceEntityReply {
+  // Some message.
+  string message = 1;
+}
+
+message FindEntityRequest {
+  // Entity id.
+  int32 entity_id = 1;
+}
+
+message FindEntityReply {
+  string message = 1;
+  protos.v1.primitives.Position position = 2;
+}
+
+message FindNearbyEntitiesRequest {
+  protos.v1.primitives.Position center = 1;
+  float radius = 2;
+}
+
+message FindNearbyEntitiesReply {
+  string message = 1;
+  repeated int32 entity_ids = 2;
+}
+
+message MoveEntityRequest {
+  int32 entity_id = 1;
+  protos.v1.primitives.Position position = 2;
+}
+
+message MoveEntityResponse { string message = 1; }
