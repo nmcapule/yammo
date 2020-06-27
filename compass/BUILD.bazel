@@ -1,4 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 go_library(
     name = "go_default_library",
@@ -6,8 +8,9 @@ go_library(
     importpath = "github.com/nmcapule/yammo/compass",
     visibility = ["//visibility:private"],
     deps = [
-        "//protos/v1/foo:go_default_library",
+        "//protos/v1/compass:go_default_library",
         "@com_github_nmcapule_quadtree//:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
     ],
 )
 
@@ -15,4 +18,19 @@ go_binary(
     name = "compass",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
+)
+
+go_image(
+    name = "compass_image",
+    embed = [":go_default_library"],
+    importpath = "github.com/nmcapule/yammo/compass",
+)
+
+container_push(
+    name = "compass_push_image",
+    format = "Docker",
+    image = ":compass_image",
+    registry = "index.docker.io",
+    repository = "nmcapule/yammo-compass",
+    tag = "dev",
 )
