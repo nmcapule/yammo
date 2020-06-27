@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+message Position {
+  float x = 1;
+  float y = 2;
+}
+
+message Character {
+  int32 id = 1;
+  string name = 2;
+  repeated string tags = 3;
+}
+
+message Relationship {
+  repeated Character members = 1;
+  repeated string tags = 2;
+}
+
+message Party {
+  repeated Character members = 1;
+  Character primary = 2;
+  repeated Relationship relationships = 3;
+}
+
+message Player {
+  int32 id = 1;
+  string username = 2;
+  string email = 3;
+  Position position = 4;
+}
