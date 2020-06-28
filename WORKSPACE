@@ -35,6 +35,14 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.14.3/rules_docker-v0.14.3.tar.gz"],
 )
 
+grpc_gateway_version = "bf742208718424f522e51f487edb8f6506568725"  # Change it to the Commit you would like to work with.
+
+http_archive(
+    name = "com_github_grpc_ecosystem_grpc_gateway",
+    strip_prefix = "grpc-gateway-%s" % grpc_gateway_version,
+    url = "https://github.com/grpc-ecosystem/grpc-gateway/archive/%s.tar.gz" % grpc_gateway_version,
+)
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()

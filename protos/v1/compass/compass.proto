@@ -1,16 +1,36 @@
 syntax = "proto3";
 
 import "protos/v1/primitives/primitives.proto";
+import "google/api/annotations.proto";
 
 package protos.v1.compass;
 
-// The compass service definition.
 service Compass {
-  rpc PlaceEntity(PlaceEntityRequest) returns (PlaceEntityReply) {}
-  rpc MoveEntity(MoveEntityRequest) returns (MoveEntityResponse) {}
-  rpc FindEntity(FindEntityRequest) returns (FindEntityReply) {}
+  rpc PlaceEntity(PlaceEntityRequest) returns (PlaceEntityReply) {
+    option (google.api.http) = {
+      post : "/v1/compass/placeentity"
+      body : "*"
+    };
+  }
+  rpc MoveEntity(MoveEntityRequest) returns (MoveEntityResponse) {
+    option (google.api.http) = {
+      post : "/v1/compass/moveentity"
+      body : "*"
+    };
+  }
+  rpc FindEntity(FindEntityRequest) returns (FindEntityReply) {
+    option (google.api.http) = {
+      post : "/v1/compass/findentity"
+      body : "*"
+    };
+  }
   rpc FindNearbyEntities(FindNearbyEntitiesRequest)
-      returns (FindNearbyEntitiesReply) {}
+      returns (FindNearbyEntitiesReply) {
+    option (google.api.http) = {
+      post : "/v1/compass/findnearbyentities"
+      body : "*"
+    };
+  }
 }
 
 message PlaceEntityRequest {

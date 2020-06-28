@@ -2,11 +2,9 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
-# gazelle:go_grpc_compilers @io_bazel_rules_go//proto:go_grpc,@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway
-
 proto_library(
-    name = "compass_proto",
-    srcs = ["compass.proto"],
+    name = "protos_v1_tesseract_proto",
+    srcs = ["tesseract.proto"],
     visibility = ["//visibility:public"],
     deps = [
         "//protos/v1/primitives:primitives_proto",
@@ -15,13 +13,10 @@ proto_library(
 )
 
 go_proto_library(
-    name = "compass_go_proto",
-    compilers = [
-        "@io_bazel_rules_go//proto:go_grpc",
-        "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
-    ],
-    importpath = "github.com/nmcapule/yammo/protos/v1/compass",
-    proto = ":compass_proto",
+    name = "protos_v1_tesseract_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/nmcapule/yammo/protos/v1/tesseract",
+    proto = ":protos_v1_tesseract_proto",
     visibility = ["//visibility:public"],
     deps = [
         "//protos/v1/primitives:go_default_library",
@@ -31,7 +26,7 @@ go_proto_library(
 
 go_library(
     name = "go_default_library",
-    embed = [":compass_go_proto"],
-    importpath = "github.com/nmcapule/yammo/protos/v1/compass",
+    embed = [":protos_v1_tesseract_go_proto"],
+    importpath = "github.com/nmcapule/yammo/protos/v1/tesseract",
     visibility = ["//visibility:public"],
 )

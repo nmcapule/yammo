@@ -4,9 +4,23 @@ services:
     container_name: yammo-redis
     image: redis
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:${REDIS_PORT}"
     expose:
-      - 6379
-    command: redis-server --requirepass yammo
+      - ${REDIS_PORT}
+    command: redis-server --requirepass ${REDIS_PASS}
     volumes:
       - "$PWD/dockerdata/redis:/data/redis"
+
+  mongodb:
+    container_name: yammo-mongodb
+    image: mongo:4.2.8
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    expose:
+      - ${MONGO_PORT}
+    command: mongod --port ${MONGO_PORT}
+    volumes:
+      - "$PWD/dockerdata/mongodb:/data/db"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}

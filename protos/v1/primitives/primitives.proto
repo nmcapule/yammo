@@ -25,8 +25,44 @@ message Party {
 }
 
 message Player {
+  // Player id.
   int32 id = 1;
+  // Unique username.
   string username = 2;
+  // Email address.
   string email = 3;
-  Position position = 4;
+  // Game entity of the player.
+  Entity entity = 4;
+}
+
+message Entity {
+  Position position = 1;
+  Party party = 2;
+  map<string, int32> markers = 3;
+  enum Type {
+    DEFAULT = 0;
+    PLAYER = 1;
+    NPC = 2;
+    PLACE = 3;
+  }
+  Type type = 4;
+}
+
+message Interactivity {
+  string command = 1;
+  message Params {
+    string name = 1;
+    oneof value {
+      string string_value = 2;
+      int32 int32_value = 3;
+      bool bool_value = 4;
+    }
+  }
+  repeated Params params = 2;
+  message Requirement {
+    string marker = 1;
+    int32 value = 2;
+    string op = 3;
+  }
+  repeated Requirement requirements = 3;
 }

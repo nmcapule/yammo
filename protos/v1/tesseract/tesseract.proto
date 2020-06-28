@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "protos/v1/primitives/primitives.proto";
+
+package protos.v1.tesseract;
+
+service Tesseract {
+  rpc ListInteraction(ListInteractionRequest) returns (ListInteractionReply) {
+    option (google.api.http) = {
+      post : "/v1/tesseract/listinteraction"
+      body : "*"
+    };
+  }
+}
+
+message ListInteractionRequest {
+  protos.v1.primitives.Entity source = 1;
+  protos.v1.primitives.Entity target = 2;
+}
+
+message ListInteractionReply {
+  repeated protos.v1.primitives.Interactivity interactions = 1;
+}
